@@ -58,7 +58,7 @@ try
         {
             Title = "CarvedRock.Api",
             Version = "v1",
-            Description = "The API for the best outdoor recreational gear on the planet!"
+            Description = "The API for "
         });
     });
 
