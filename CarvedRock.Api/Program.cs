@@ -1,11 +1,14 @@
 using CarvedRock.Api;
 using CarvedRock.Api.Domain;
+using CarvedRock.Api.Integrations;
 using CarvedRock.Api.Interfaces;
 using CarvedRock.Api.Middleware;
+using CarvedRock.Api.Repository;
 using Microsoft.OpenApi.Models;
 using Serilog;
 using Serilog.Events;
-
+using System.Data;
+using System.Data.SqlClient;
 
 var name = typeof(Program).Assembly.GetName().Name;
 
@@ -14,7 +17,8 @@ Log.Logger = new LoggerConfiguration()
     .Enrich.FromLogContext()
     .Enrich.WithMachineName()
     .Enrich.WithProperty("Assembly", name)
-    .WriteTo.Seq(serverUrl: "http://host.docker.internal:5341")
+    //.WriteTo.Seq(serverUrl: "http://host.docker.internal:5341")
+    .WriteTo.Seq(serverUrl: "http://seq_in_dc:5341")
     .WriteTo.Console()
     .CreateLogger();
 
@@ -40,7 +44,6 @@ try
     var dbgView = (builder.Configuration as IConfigurationRoot).GetDebugView();
     Log.ForContext("ConfigurationDebug", dbgView)
         .Information("Configuration dump");
-   
 
     // Add services to the container.
 
@@ -49,6 +52,9 @@ try
 
     builder.Services.AddScoped<IProductLogic, ProductLogic>();
     builder.Services.AddScoped<IQuickOrderLogic, QuickOrderLogic>();
+    builder.Services.AddSingleton<IOrderProcessingNotification, OrderProcessingNotification>();
+    builder.Services.AddScoped<IDbConnection>(d => new SqlConnection(connectionString));
+    builder.Services.AddScoped<ICarvedRockRepository, CarvedRockRepository>();
     builder.Services.AddControllers();
     // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
     builder.Services.AddEndpointsApiExplorer();

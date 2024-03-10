@@ -1,5 +1,8 @@
+using CarvedRock.OrderProcessor.Repository;
 using Serilog;
 using Serilog.Events;
+using System.Data;
+using System.Data.SqlClient;
 
 namespace CarvedRock.OrderProcessor
 {
@@ -38,6 +41,9 @@ namespace CarvedRock.OrderProcessor
                 Host.CreateDefaultBuilder(args)
                     .ConfigureServices((hostContext, services) =>
                     {
+                        services.AddSingleton<IDbConnection>(d =>
+                        new SqlConnection(hostContext.Configuration.GetConnectionString("Db")));
+                        services.AddSingleton<IInventoryRepository, InventoryRepository>();
                         services.AddHostedService<Worker>();
                     })
                     .UseSerilog();

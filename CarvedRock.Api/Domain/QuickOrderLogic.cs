@@ -1,20 +1,37 @@
 ﻿using CarvedRock.Api.ApiModels;
+using CarvedRock.Api.Integrations;
 using CarvedRock.Api.Interfaces;
+using CarvedRock.Api.Repository;
 using Serilog;
 
 namespace CarvedRock.Api.Domain
 {
     public class QuickOrderLogic : IQuickOrderLogic
     {
-        public QuickOrderLogic()
+        private readonly ICarvedRockRepository _repo;
+        private readonly IOrderProcessingNotification _orderProcessingNotification;
+        private readonly ILogger<QuickOrderLogic> _logger;
+
+        public QuickOrderLogic(ICarvedRockRepository repo,
+            IOrderProcessingNotification orderProcessingNotification,
+            ILogger<QuickOrderLogic> logger)
         {
+            _repo = repo;
+            _orderProcessingNotification = orderProcessingNotification;
+            _logger = logger;
         }
 
-        public Guid PlaceQuickOrder(QuickOrder order, int customerId)
+        public async Task<Guid> PlaceQuickOrder(QuickOrder order, int customerId)
         {
-            Log.Information("Placing order and sending update for inventory...");
+            _logger.LogInformation("Placing order and sending update for inventory...");
+            var orderId = Guid.NewGuid();
+            // persist order to database or wherever
+            await _repo.SubmitNewQuickOrder(order, customerId, orderId);
 
-            return Guid.NewGuid();
+            // post "orderplaced" event to rabbitmq
+            _orderProcessingNotification.QuickOrderReceived(order, customerId, orderId);
+
+            return orderId;
         }
     }
 }

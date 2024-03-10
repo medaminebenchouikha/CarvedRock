@@ -7,7 +7,20 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarvedRock.Api", "CarvedRoc
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarvedRock.OrderProcessor", "CarvedRock.OrderProcessor\CarvedRock.OrderProcessor.csproj", "{F6D54098-699E-4D76-9216-EDE69ABE4E5E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarvedRock.InvoiceGenerator", "CarvedRock.InvoiceGenerator\CarvedRock.InvoiceGenerator.csproj", "{ED565121-EE61-4E0F-BB64-9DE120177DCD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarvedRock.InvoiceGenerator", "CarvedRock.InvoiceGenerator\CarvedRock.InvoiceGenerator.csproj", "{ED565121-EE61-4E0F-BB64-9DE120177DCD}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{F7E3A7A0-77B7-4601-97AB-FFAB36F0F648}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarvedRock.App", "CarvedRock.App\CarvedRock.App.csproj", "{9038055F-2296-475A-ABCB-2B3C3FB524AC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sql", "sql", "{41B0EBEC-E050-462F-A0E7-C60104C795FF}"
+	ProjectSection(SolutionItems) = preProject
+		entrypoint.sh = entrypoint.sh
+		InitializeDatabase.sql = InitializeDatabase.sql
+		setup.sh = setup.sh
+		sql.Dockerfile = sql.Dockerfile
+		wait-for-it.sh = wait-for-it.sh
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +40,14 @@ Global
 		{ED565121-EE61-4E0F-BB64-9DE120177DCD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ED565121-EE61-4E0F-BB64-9DE120177DCD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ED565121-EE61-4E0F-BB64-9DE120177DCD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F7E3A7A0-77B7-4601-97AB-FFAB36F0F648}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F7E3A7A0-77B7-4601-97AB-FFAB36F0F648}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F7E3A7A0-77B7-4601-97AB-FFAB36F0F648}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F7E3A7A0-77B7-4601-97AB-FFAB36F0F648}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9038055F-2296-475A-ABCB-2B3C3FB524AC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9038055F-2296-475A-ABCB-2B3C3FB524AC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9038055F-2296-475A-ABCB-2B3C3FB524AC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9038055F-2296-475A-ABCB-2B3C3FB524AC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
